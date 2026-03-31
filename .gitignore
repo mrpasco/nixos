@@ -1,0 +1,23 @@
+# Nix build outputs
+result
+result-*
+
+# Documentation with credentials (not for public repo)
+docs/
+
+# Secret files
+secrets/
+*.secret
+
+# Hardware configurations (machine-specific, users generate their own)
+#hardware-configuration.nix
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
