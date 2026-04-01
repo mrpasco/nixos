@@ -83,7 +83,7 @@
     };
   };
 
-  # Work-specific printers: Canon G1430, Zebra ZD220, and Epson L1455
+  # Work-specific printers
   hardware.printers = {
     ensurePrinters = [
       {
@@ -123,6 +123,16 @@
         ppdOptions = {
           PageSize = "A4";
           MediaType = "PLAIN_NORMAL";
+        };
+      }
+      {
+        name = "Konica_Minolta_C360";
+        location = "Office";
+        deviceUri = "ipp://192.168.2.25/ipp/print";
+        model = "everywhere";
+        ppdOptions = {
+          PageSize = "A4";
+          ColorModel = "CMYK";
         };
       }
     ];
