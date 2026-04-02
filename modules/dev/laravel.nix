@@ -1,7 +1,7 @@
 { config, lib, pkgs, userConfig, ... }:
 
 let
-  php = pkgs.php82.withExtensions ({ enabled, all }: enabled ++ (with all; [
+  php = pkgs.php83.withExtensions ({ enabled, all }: enabled ++ (with all; [
     bcmath
     curl
     gd
@@ -11,11 +11,11 @@ let
     zip
   ]));
 in {
-  # PHP 8.2 with Laravel-required extensions
+  # PHP 8.3 with Laravel-required extensions
   environment.systemPackages = [
     php
     php.packages.composer
-    pkgs.nodejs_20
+    pkgs.nodejs_22
   ];
 
   # MySQL 8
@@ -23,14 +23,11 @@ in {
     enable = true;
     package = pkgs.mysql80;
     ensureDatabases = [ "moneycue" ];
+    ensureUsers = [{
+      name = userConfig.username;
+      ensurePermissions."moneycue.*" = "ALL PRIVILEGES";
+    }];
     settings.mysqld.bind-address = "127.0.0.1";  # Localhost only — never expose to LAN
-    # Local dev only — MySQL is bound to 127.0.0.1 (not reachable from network).
-    # For real secret management in flakes, use sops-nix or agenix.
-    initialScript = pkgs.writeText "mysql-init.sql" ''
-      CREATE USER IF NOT EXISTS '${userConfig.username}'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'moneycue';
-      GRANT ALL PRIVILEGES ON moneycue.* TO '${userConfig.username}'@'localhost';
-      FLUSH PRIVILEGES;
-    '';
   };
 
   # Adminer (database UI) via nginx on http://localhost:8080

@@ -103,6 +103,7 @@
         model = "drv:///sample.drv/zebra.ppd";  # Zebra ZPL Label Printer
         ppdOptions = {
           PageSize = "Custom.39.99x29.99mm";  # 40x30mm labels (actual: 39.99x29.99mm)
+          Resolution = "203dpi";
         };
       }
       {

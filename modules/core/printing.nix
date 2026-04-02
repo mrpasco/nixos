@@ -37,12 +37,20 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+    # Restrict mDNS to physical LAN interfaces only (not Tailscale/VPN)
+    # Hosts can override this list if their interface name differs.
+    allowInterfaces = lib.mkDefault [ "enp0s31f6" "wlp0s20f3" ];
   };
 
   systemd.services.avahi-daemon.preStart = lib.mkAfter ''
     rm -f /run/avahi-daemon/pid || true
   '';
   
+  # Printer management GUI and virtual PDF printer
+  environment.systemPackages = with pkgs; [
+    system-config-printer  # GTK printer management UI (easier than CUPS web interface)
+  ];
+
   # Enable scanner support (SANE)
   hardware.sane = {
     enable = true;

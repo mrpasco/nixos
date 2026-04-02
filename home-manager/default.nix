@@ -43,6 +43,8 @@
     # --------------------------------------------------------------------------
     pkgs-unstable.windsurf
     filezilla
+    meld                    # Visual diff/merge tool
+    insomnia                # REST API testing client (essential for Laravel APIs)
 
     # --------------------------------------------------------------------------
     # OFFICE & PRODUCTIVITY
@@ -70,6 +72,7 @@
     # GRAPHICS & PHOTO
     # --------------------------------------------------------------------------
     gthumb          # Multi-photo print with layout wizard (Windows "Print Pictures" equivalent)
+    gimp            # Image editing
 
     # --------------------------------------------------------------------------
     # DISK TOOLS
@@ -109,6 +112,9 @@
         name = userConfig.fullName;
         email = userConfig.email;
       };
+      init.defaultBranch = "main";
+      pull.rebase = true;
+      push.autoSetupRemote = true;
     };
   };
 

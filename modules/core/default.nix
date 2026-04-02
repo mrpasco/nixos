@@ -102,7 +102,18 @@
   
   # Additional system services for desktop functionality
   services.accounts-daemon.enable = true;  # User account information
+  programs.dconf.enable = true;            # Required by GTK apps (gnome-disk-utility, gthumb, simple-scan) to save settings
+  services.earlyoom.enable = true;         # Prevent OOM freezes by killing largest process before system locks up
+  programs.ssh.startAgent = true;          # SSH agent for Git/deployment key management
   
+  # Automatic security updates (rebuild nightly, no auto-reboot)
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/home/${userConfig.username}/nixos-config#${hostname}";
+    dates = "04:00";
+    allowReboot = false;
+  };
+
   # Nix settings
   nix = {
     settings = {
