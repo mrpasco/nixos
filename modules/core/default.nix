@@ -83,7 +83,6 @@
 
   # Power management services
   services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;
   
   # Graphics and hardware acceleration
   hardware.graphics = {

@@ -37,9 +37,6 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-    # Restrict mDNS to physical LAN interfaces only (not Tailscale/VPN)
-    # Hosts can override this list if their interface name differs.
-    allowInterfaces = lib.mkDefault [ "enp0s31f6" "wlp0s20f3" ];
   };
 
   systemd.services.avahi-daemon.preStart = lib.mkAfter ''
