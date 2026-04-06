@@ -27,7 +27,7 @@
       # Function to create NixOS configuration for each host
       mkHost = hostname: nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs hostname userConfig; };
+        specialArgs = { inherit inputs hostname userConfig pkgs-unstable; };
         modules = [
           ./hosts/${hostname}/default.nix
           home-manager.nixosModules.home-manager

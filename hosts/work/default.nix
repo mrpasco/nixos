@@ -1,6 +1,6 @@
 # Work PC specific configuration
 # Only contains differences from base configuration
-{ config, lib, pkgs, inputs, hostname, userConfig, ... }:
+{ config, lib, pkgs, pkgs-unstable, inputs, hostname, userConfig, ... }:
 
 {
   imports = [
@@ -37,9 +37,10 @@
   # AMD OpenCL (ROCm) for Radeon R9 290
   hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
 
-  # Ollama service with AMD GPU support
+  # Ollama service with AMD GPU support (using unstable version for latest models)
   services.ollama = {
     enable = true;
+    package = pkgs-unstable.ollama-rocm;  # Use latest version (0.19.0) with AMD GPU support
     acceleration = "rocm";
     environmentVariables = {
       HSA_OVERRIDE_GFX_VERSION = "10.3.0";  # For R9 290/390 compatibility
