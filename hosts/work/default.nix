@@ -37,6 +37,17 @@
   # AMD OpenCL (ROCm) for Radeon R9 290
   hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
 
+  # Ollama service with AMD GPU support
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+    environmentVariables = {
+      HSA_OVERRIDE_GFX_VERSION = "10.3.0";  # For R9 290/390 compatibility
+    };
+    host = "0.0.0.0";
+    port = 11434;
+  };
+
   # VirtualBox host (work only)
   virtualisation.virtualbox.host.enable = true;
   users.users.${userConfig.username}.extraGroups = [ "vboxusers" ];
@@ -55,6 +66,7 @@
     mesa-demos     # glxinfo + glxgears for OpenGL driver verification
     glmark2        # OpenGL benchmark / stress test
     vulkan-tools   # vulkaninfo to inspect Vulkan driver capabilities
+    opencode       # AI coding agent for terminal, IDE, and desktop
   ];
 
   # Desktop performance: no battery concerns on i9-9900KF

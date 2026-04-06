@@ -125,6 +125,10 @@
       ll = "ls -la";
       update = "nixos-update";
       upgrade = "nixos-upgrade";
+      # Ollama shortcuts
+      ollama-list = "ollama list";
+      ollama-ps = "ollama ps";
+      ollama-serve = "ollama serve";
     };
     bashrcExtra = ''
       # NixOS helpers (work across devices)
