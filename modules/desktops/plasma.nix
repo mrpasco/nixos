@@ -35,6 +35,9 @@
     kdePackages.partitionmanager         # Partition manager
     kdePackages.filelight                # Disk usage analyzer
     kdePackages.plasma-browser-integration
+    kdePackages.kdegraphics-thumbnailers # Image/PDF/PS thumbnails for Dolphin
+    kdePackages.kimageformats            # Qt image format plugins (EPS, EXR, HDR, etc.)
+    kdePackages.ffmpegthumbs             # Video file thumbnails for Dolphin
   ];
 
   # KWallet: unlock on SDDM login and on TTY/other login
