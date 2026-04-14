@@ -8,10 +8,20 @@
     ../../modules/core
     ../../modules/desktops/plasma.nix
     ../../modules/dev/laravel.nix
+    ../../modules/dev/wordpress.nix
   ];
 
   # Hostname
   networking.hostName = userConfig.hostnames.work;
+
+  # WordPress dev sites — each maps to ~/Dev/<name>/ with DB wp_<name> at http://<name>.test
+  services.wordpressDev = {
+    enable = true;
+    sites = [
+      "wp1"
+      # "client-project"
+    ];
+  };
 
   # No wireless or bluetooth on desktop work PC
   # (base config doesn't enable these by default)
