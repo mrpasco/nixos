@@ -47,7 +47,8 @@
     filezilla
     meld                    # Visual diff/merge tool
     insomnia                # REST API testing client (essential for Laravel APIs)
-
+    zed-editor
+    
     # --------------------------------------------------------------------------
     # OFFICE & PRODUCTIVITY
     # --------------------------------------------------------------------------
