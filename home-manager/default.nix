@@ -45,14 +45,13 @@
     # --------------------------------------------------------------------------
     pkgs-unstable.windsurf
     filezilla
-    meld                    # Visual diff/merge tool
-    insomnia                # REST API testing client (essential for Laravel APIs)
     zed-editor
     claude-code
     vscode
     # --------------------------------------------------------------------------
     # OFFICE & PRODUCTIVITY
     # --------------------------------------------------------------------------
+    
     onlyoffice-desktopeditors
     obsidian
 
