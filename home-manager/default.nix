@@ -49,6 +49,7 @@
     insomnia                # REST API testing client (essential for Laravel APIs)
     zed-editor
     claude-code
+    vscode
     # --------------------------------------------------------------------------
     # OFFICE & PRODUCTIVITY
     # --------------------------------------------------------------------------
