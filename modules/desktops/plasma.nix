@@ -38,6 +38,7 @@
     kdePackages.kdegraphics-thumbnailers # Image/PDF/PS thumbnails for Dolphin
     kdePackages.kimageformats            # Qt image format plugins (EPS, EXR, HDR, etc.)
     kdePackages.ffmpegthumbs             # Video file thumbnails for Dolphin
+    kdePackages.kalk
   ];
 
   # KWallet: unlock on SDDM login and on TTY/other login
