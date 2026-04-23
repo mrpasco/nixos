@@ -19,6 +19,7 @@
     enable = true;
     sites = [
       "wp1"
+      "wp2"
       # "client-project"
     ];
   };

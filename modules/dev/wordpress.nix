@@ -44,12 +44,13 @@ let
         try_files $uri $uri/ /index.php?$args;
       '';
     };
-    locations."~ \\.php$" = {
+    locations."~ \.php$" = {
       fastcgiParams = {
         SCRIPT_FILENAME = "$document_root$fastcgi_script_name";
       };
       extraConfig = ''
         fastcgi_pass unix:${config.services.phpfpm.pools."wp-${site}".socket};
+        fastcgi_read_timeout 300;
         include ${pkgs.nginx}/conf/fastcgi_params;
       '';
     };
