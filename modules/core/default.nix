@@ -104,6 +104,7 @@
   programs.dconf.enable = true;            # Required by GTK apps (gnome-disk-utility, gthumb, simple-scan) to save settings
   services.earlyoom.enable = true;         # Prevent OOM freezes by killing largest process before system locks up
   programs.ssh.startAgent = true;          # SSH agent for Git/deployment key management
+  programs.nix-ld.enable = true;           # Allow dynamically linked executables (e.g. VS Code extension binaries) to run
 
   # AnyDesk ships its own systemd unit in the package. Installing the package in
   # Home Manager gives the launcher, but the service is needed for unattended
