@@ -28,9 +28,6 @@
   # No printers at home — disable CUPS (SANE/scanning still works via hardware.sane)
   services.printing.enable = false;
 
-  # VirtualBox guest (can run in VM if needed)
-  virtualisation.virtualbox.guest.enable = true;
-
   system.stateVersion = "25.11";
 
 }

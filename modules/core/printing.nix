@@ -4,6 +4,7 @@
   # Enable printing support
   services.printing = {
     enable = lib.mkDefault true;  # hosts can override with: services.printing.enable = false
+    startWhenNeeded = false;  # Keep CUPS warm; Chrome can time out on first socket activation.
     browsing = true;  # Enable printer browsing for local discovery
     drivers = with pkgs; [
       cups-filters   # PDF rendering backend (required for reliable Chrome → CUPS → printer)
@@ -43,11 +44,6 @@
     rm -f /run/avahi-daemon/pid || true
   '';
   
-  # Printer management GUI and virtual PDF printer
-  environment.systemPackages = with pkgs; [
-    system-config-printer  # GTK printer management UI (easier than CUPS web interface)
-  ];
-
   # Enable scanner support (SANE)
   hardware.sane = {
     enable = true;

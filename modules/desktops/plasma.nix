@@ -3,6 +3,16 @@
 {
   # Enable KDE Plasma 6 desktop environment
   services.desktopManager.plasma6.enable = true;
+
+  # Keep the Plasma install focused on the desktop shell and the apps we
+  # explicitly use. The full PIM suite and these optional extras are noisy on a
+  # simple workstation setup.
+  programs.kde-pim.enable = false;
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    elisa
+    khelpcenter
+    krdp
+  ];
   
   # Enable SDDM display manager with Wayland support
   services.displayManager.sddm = {
@@ -15,29 +25,15 @@
   services.xserver.enable = true;   # X11 input drivers and session support
   programs.xwayland.enable = true;  # X11 app compatibility on Wayland
   
-  # XDG Desktop Portal (file chooser, screen sharing, etc)
-  # xdg-desktop-portal-kde is auto-added by plasma6; gtk is a fallback for non-KDE apps
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    xdgOpenUsePortal = true;
-  };
+  # Plasma adds the KDE/GTK desktop portals; route xdg-open through them.
+  xdg.portal.xdgOpenUsePortal = true;
 
   # KDE Connect (phone integration - open firewall ports automatically)
   programs.kdeconnect.enable = true;
 
-  # Extras not auto-included by plasma6.enable
-  # (dolphin, konsole, ark, spectacle, gwenview, okular, kcalc,
-  #  plasma-systemmonitor, kinfocenter, plasma-disks, sddm-kcm, plasma-nm
-  #  are all bundled automatically)
+  # Small workstation extras not auto-included by plasma6.enable.
   environment.systemPackages = with pkgs; [
-    kdePackages.kate                     # Text editor
-    kdePackages.partitionmanager         # Partition manager
     kdePackages.filelight                # Disk usage analyzer
-    kdePackages.plasma-browser-integration
-    kdePackages.kdegraphics-thumbnailers # Image/PDF/PS thumbnails for Dolphin
-    kdePackages.kimageformats            # Qt image format plugins (EPS, EXR, HDR, etc.)
-    kdePackages.ffmpegthumbs             # Video file thumbnails for Dolphin
     kdePackages.kalk
     kdePackages.kompare
   ];

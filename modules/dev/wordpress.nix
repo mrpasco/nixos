@@ -100,27 +100,9 @@ in {
 
     # ProtectHome=true in nginx and php-fpm systemd units blocks ~/Dev/ even
     # when the processes run as the dev user — disable for local development.
-    # Also sets up auth_socket for the MySQL dev user after each boot.
     systemd.services = lib.mkMerge (
       [
         { nginx.serviceConfig.ProtectHome = lib.mkForce false; }
-        {
-          wordpress-dev-db-auth = {
-            description = "Configure MySQL socket auth for WordPress dev user";
-            after = [ "mysql.service" ];
-            requires = [ "mysql.service" ];
-            wantedBy = [ "multi-user.target" ];
-            serviceConfig = {
-              Type = "oneshot";
-              RemainAfterExit = true;
-            };
-            script = ''
-              ${config.services.mysql.package}/bin/mysql \
-                --socket=/run/mysqld/mysqld.sock -u root -e \
-                "ALTER USER '${userConfig.username}'@'localhost' IDENTIFIED WITH auth_socket;"
-            '';
-          };
-        }
       ]
       ++ map (site: { "phpfpm-wp-${site}".serviceConfig.ProtectHome = lib.mkForce false; }) cfg.sites
     );

@@ -35,7 +35,7 @@
       # CUPS that goes stale, silently failing print jobs. Closing Chrome "fixes"
       # it by dropping the stale connection. This flag forces synchronous printing
       # with a fresh connection per job.
-      commandLineArgs = [ "--disable-features=CupsPrintBackend" ];
+      commandLineArgs = "--disable-features=CupsPrintBackend";
     })
 
     brave
@@ -47,7 +47,7 @@
     filezilla
     zed-editor
     claude-code
-    vscode
+    pkgs-unstable.vscode
     # --------------------------------------------------------------------------
     # OFFICE & PRODUCTIVITY
     # --------------------------------------------------------------------------
@@ -152,7 +152,7 @@
           echo "Set NIXOS_CONFIG_DIR or clone the repo to that path." >&2
           return 1
         fi
-        sudo nixos-rebuild switch --no-reexec --option http-connections 40 --flake "$dir#${hostname}"
+        sudo nixos-rebuild switch --flake "$dir#${hostname}"
       }
 
       nixos-upgrade() {
@@ -169,7 +169,7 @@
           return 1
         fi
         (cd "$dir" && nix flake update) && \
-          sudo nixos-rebuild switch --no-reexec --option http-connections 40 --flake "$dir#${hostname}"
+          sudo nixos-rebuild switch --flake "$dir#${hostname}"
       }
     '';
   };

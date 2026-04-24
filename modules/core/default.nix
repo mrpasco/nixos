@@ -104,6 +104,12 @@
   programs.dconf.enable = true;            # Required by GTK apps (gnome-disk-utility, gthumb, simple-scan) to save settings
   services.earlyoom.enable = true;         # Prevent OOM freezes by killing largest process before system locks up
   programs.ssh.startAgent = true;          # SSH agent for Git/deployment key management
+
+  # AnyDesk ships its own systemd unit in the package. Installing the package in
+  # Home Manager gives the launcher, but the service is needed for unattended
+  # remote access and stable connection handling.
+  systemd.packages = [ pkgs.anydesk ];
+  systemd.services.anydesk.wantedBy = [ "multi-user.target" ];
   
   # Automatic security updates (rebuild nightly, no auto-reboot)
   system.autoUpgrade = {
@@ -115,6 +121,11 @@
 
   # Nix settings
   nix = {
+    # Run the Nix daemon at idle CPU/IO priority so builds yield to
+    # interactive processes (desktop stays responsive during upgrades).
+    daemonCPUSchedPolicy = "idle";
+    daemonIOSchedClass = "idle";
+
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
 
@@ -127,12 +138,20 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
 
-      max-jobs = "auto";              # Use all available CPU cores
-      cores = 0;                      # Let each job use all cores if needed
+      # Cap parallelism: leave headroom for the desktop during large builds
+      # (kernel/firmware). "auto" with cores=0 saturates every thread.
+      max-jobs = 4;
+      cores = 4;
       log-lines = 200;
       builders-use-substitutes = true;
-      auto-optimise-store = true;
       warn-dirty = false;
+    };
+
+    # Periodic store optimisation instead of auto-optimise-store (which ran
+    # on every build and was a major cause of build-time lag).
+    optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
     };
 
     gc = {
@@ -157,8 +176,9 @@
     "vm.dirty_ratio" = 15;               # Force synchronous writes at 15% dirty pages
   };
   
-  # Use tmpfs for builds (builds in RAM for massive speed boost)
-  boot.tmp.useTmpfs = true;
-  boot.tmp.tmpfsSize = "25%";
+  # Clean /tmp on every boot. We deliberately do NOT use tmpfs for /tmp:
+  # large builds (kernel/firmware/Chromium) can exceed a 25% tmpfs and push
+  # the system into swap/OOM, causing exactly the lag seen during upgrades.
+  boot.tmp.cleanOnBoot = true;
 
 }

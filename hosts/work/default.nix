@@ -87,12 +87,6 @@
   services.power-profiles-daemon.enable = lib.mkForce false;
 
 
-  # CUPS always-running at boot — eliminates socket-activation startup latency
-  # that causes Chrome's first-print IPP request to time out before CUPS is ready.
-  systemd.services.cups = {
-    wantedBy = lib.mkForce [ "multi-user.target" ];
-  };
-
   # Ensure printers are configured after CUPS and network are ready.
   # switch-to-configuration kills this service (SIGTERM) during nixos-rebuild.
   # Printer configs persist in CUPS, so this only matters on first setup.
